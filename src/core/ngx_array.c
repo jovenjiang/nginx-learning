@@ -43,7 +43,9 @@ ngx_array_destroy(ngx_array_t *a)
     }
 }
 
-
+/* 向数组a中添加一个元素，并返回新加元素的地址
+ * 需要对返回地址类型转换，再给新元素各字段赋值
+ */
 void *
 ngx_array_push(ngx_array_t *a)
 {
@@ -60,15 +62,15 @@ ngx_array_push(ngx_array_t *a)
         p = a->pool;
 
         if ((u_char *) a->elts + size == p->d.last
-            && p->d.last + a->size <= p->d.end)
-        {
+            && p->d.last + a->size <= p->d.end)		//d.last指向已用空间的末尾（空闲块起始）
+        {											//d.end指向内存池末尾
             /*
              * the array allocation is the last in the pool
              * and there is space for new allocation
              */
 
             p->d.last += a->size;
-            a->nalloc++;
+            a->nalloc++;			//为什么不是a->nelts++;
 
         } else {
             /* allocate a new array */

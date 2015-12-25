@@ -47,19 +47,19 @@ struct ngx_pool_large_s {
 
 
 typedef struct {
-    u_char               *last;
-    u_char               *end;
+    u_char               *last;			//空闲块起始
+    u_char               *end;			//内存块结束？？
     ngx_pool_t           *next;
     ngx_uint_t            failed;
 } ngx_pool_data_t;
 
 
 struct ngx_pool_s {
-    ngx_pool_data_t       d;
+    ngx_pool_data_t       d;			//小于max的小内存链
     size_t                max;
     ngx_pool_t           *current;
-    ngx_chain_t          *chain;
-    ngx_pool_large_t     *large;
+    ngx_chain_t          *chain;		//what to do? 缓冲区链?
+    ngx_pool_large_t     *large;		// 大于max的大内存链
     ngx_pool_cleanup_t   *cleanup;
     ngx_log_t            *log;
 };

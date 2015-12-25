@@ -15,22 +15,22 @@ static void *ngx_palloc_large(ngx_pool_t *pool, size_t size);
 
 ngx_pool_t *
 ngx_create_pool(size_t size, ngx_log_t *log)
-{
+{								//创建size大小的内存块
     ngx_pool_t  *p;
 
-    p = ngx_memalign(NGX_POOL_ALIGNMENT, size, log);
+    p = ngx_memalign(NGX_POOL_ALIGNMENT, size, log);		//allocate memory
     if (p == NULL) {
         return NULL;
     }
 
-    p->d.last = (u_char *) p + sizeof(ngx_pool_t);
-    p->d.end = (u_char *) p + size;
+    p->d.last = (u_char *) p + sizeof(ngx_pool_t);		//空闲区起始地址
+    p->d.end = (u_char *) p + size;						//结束位置
     p->d.next = NULL;
     p->d.failed = 0;
 
-    size = size - sizeof(ngx_pool_t);
+    size = size - sizeof(ngx_pool_t);		//空闲区大小
     p->max = (size < NGX_MAX_ALLOC_FROM_POOL) ? size : NGX_MAX_ALLOC_FROM_POOL;
-
+    										//取小的，what  is NGX_MAX_ALLOC_FROM_POOL
     p->current = p;
     p->chain = NULL;
     p->large = NULL;

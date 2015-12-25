@@ -35,7 +35,7 @@ struct ngx_shm_zone_s {
 
 
 struct ngx_cycle_s {
-    void                  ****conf_ctx;
+    void                  ****conf_ctx;		//why **** ??
     ngx_pool_t               *pool;
 
     ngx_log_t                *log;
@@ -76,8 +76,9 @@ typedef struct {
      ngx_flag_t               daemon;
      ngx_flag_t               master;
 
-     ngx_msec_t               timer_resolution;
-
+     ngx_msec_t               timer_resolution; /*typedef ngx_uint_t  ngx_rbtree_key_t;
+     	 	 	 	 	 	 	 	 	 	 	  typedef ngx_rbtree_key_t      ngx_msec_t;
+     	 	 	 	 	 	 	 	 	 	 	 */
      ngx_int_t                worker_processes;
      ngx_int_t                debug_points;
 

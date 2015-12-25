@@ -201,7 +201,7 @@ static char **ngx_os_environ;
 int ngx_cdecl
 main(int argc, char *const *argv)
 {
-    ngx_int_t         i;
+    ngx_int_t         i;			// is just int
     ngx_log_t        *log;
     ngx_cycle_t      *cycle, init_cycle;
     ngx_core_conf_t  *ccf;
@@ -212,7 +212,7 @@ main(int argc, char *const *argv)
         return 1;
     }
 
-    if (ngx_get_options(argc, argv) != NGX_OK) {
+    if (ngx_get_options(argc, argv) != NGX_OK) { 		//set args
         return 1;
     }
 
@@ -287,7 +287,7 @@ main(int argc, char *const *argv)
     ngx_regex_init();
 #endif
 
-    ngx_pid = ngx_getpid();
+    ngx_pid = ngx_getpid(); 		//getpit()
 
     log = ngx_log_init(ngx_prefix);
     if (log == NULL) {
@@ -317,11 +317,11 @@ main(int argc, char *const *argv)
         return 1;
     }
 
-    if (ngx_process_options(&init_cycle) != NGX_OK) {
+    if (ngx_process_options(&init_cycle) != NGX_OK) {		//what to do？
         return 1;
     }
 
-    if (ngx_os_init(log) != NGX_OK) {
+    if (ngx_os_init(log) != NGX_OK) {			//系统一些初始化工作
         return 1;
     }
 
@@ -430,7 +430,7 @@ ngx_add_inherited_sockets(ngx_cycle_t *cycle)
     ngx_int_t         s;
     ngx_listening_t  *ls;
 
-    inherited = (u_char *) getenv(NGINX_VAR);
+    inherited = (u_char *) getenv(NGINX_VAR);	//取得环境变量
 
     if (inherited == NULL) {
         return NGX_OK;
@@ -440,7 +440,7 @@ ngx_add_inherited_sockets(ngx_cycle_t *cycle)
                   "using inherited sockets from \"%s\"", inherited);
 
     if (ngx_array_init(&cycle->listening, cycle->pool, 10,
-                       sizeof(ngx_listening_t))
+                       sizeof(ngx_listening_t))				//分配数组
         != NGX_OK)
     {
         return NGX_ERROR;
@@ -815,7 +815,7 @@ ngx_save_argv(ngx_cycle_t *cycle, int argc, char *const *argv)
     ngx_os_argv = (char **) argv;
     ngx_argc = argc;
 
-    ngx_argv = ngx_alloc((argc + 1) * sizeof(char *), cycle->log);
+    ngx_argv = ngx_alloc((argc + 1) * sizeof(char *), cycle->log);		//分配指针空间
     if (ngx_argv == NULL) {
         return NGX_ERROR;
     }
@@ -823,7 +823,7 @@ ngx_save_argv(ngx_cycle_t *cycle, int argc, char *const *argv)
     for (i = 0; i < argc; i++) {
         len = ngx_strlen(argv[i]) + 1;
 
-        ngx_argv[i] = ngx_alloc(len, cycle->log);
+        ngx_argv[i] = ngx_alloc(len, cycle->log);		//分配参数空间
         if (ngx_argv[i] == NULL) {
             return NGX_ERROR;
         }
